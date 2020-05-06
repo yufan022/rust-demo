@@ -17,6 +17,9 @@ fn main() {
 
     let spaces = "   ";
     let spaces = spaces.len();
-    println!("The space length is: {}", spaces)
+    println!("The space length is: {}", spaces);
+
+    let mut test_num: u8 = 255;
+    println!("{}", test_num)
 
 }
