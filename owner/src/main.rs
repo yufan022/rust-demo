@@ -33,7 +33,7 @@ fn main4() {
     println!("s1 = {}, s2 = {}", s1, s2);
 }
 
-fn main5(){
+fn main5() {
     let x = 5;
     let y = x;
 
@@ -44,16 +44,15 @@ fn main6() {
     let s = String::from("hello");  // s 进入作用域
 
     takes_ownership(s);             // s 的值移动到函数里 ...
-                                    // ... 所以到这里不再有效
+    // ... 所以到这里不再有效
 
     let x = 5;                      // x 进入作用域
 
     makes_copy(x);                  // x 应该移动函数里，
-                                    // 但 i32 是 Copy 的，所以在后面可继续使用 x
+    // 但 i32 是 Copy 的，所以在后面可继续使用 x
     println!("{}", x);
-
 } // 这里, x 先移出了作用域，然后是 s。但因为 s 的值已被移走，
-  // 所以不会有特殊操作
+// 所以不会有特殊操作
 
 fn takes_ownership(some_string: String) { // some_string 进入作用域
     println!("{}", some_string);
@@ -64,21 +63,20 @@ fn makes_copy(some_integer: i32) { // some_integer 进入作用域
 } // 这里，some_integer 移出作用域。不会有特殊操作
 
 
-
 fn main7() {
     let s1 = gives_ownership();         // gives_ownership 将返回值
-                                        // 移给 s1
+    // 移给 s1
 
     let s2 = String::from("hello");     // s2 进入作用域
 
     let s3 = takes_and_gives_back(s2);  // s2 被移动到
-                                        // takes_and_gives_back 中, 
-                                        // 它也将返回值移给 s3
+    // takes_and_gives_back 中,
+    // 它也将返回值移给 s3
 } // 这里, s3 移出作用域并被丢弃。s2 也移出作用域，但已被移走，
-  // 所以什么也不会发生。s1 移出作用域并被丢弃
+// 所以什么也不会发生。s1 移出作用域并被丢弃
 
 fn gives_ownership() -> String {             // gives_ownership 将返回值移动给
-                                             // 调用它的函数
+    // 调用它的函数
 
     let some_string = String::from("hello"); // some_string 进入作用域.
 
@@ -105,13 +103,55 @@ fn calculate_length(s: String) -> (String, usize) {
     (s, length)
 }
 
-fn main(){
+fn main9() {
     let s1 = String::from("hello");
     let len = calculate_length1(&s1);
-    
 }
 
 fn calculate_length1(s: &String) -> usize { // s 是对 String 的引用
     s.len()
 } // 这里，s 离开了作用域。但因为它并不拥有引用值的所有权，
-  // 所以什么也不会发生
+// 所以什么也不会发生
+
+
+fn main10() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+
+fn main11(){
+    let mut s = String::from("hello");
+
+    // {
+        let r1 = &mut s;
+
+    // } // r1 在这里离开了作用域，所以我们完全可以创建一个新的引用
+
+    let r2 = &mut s;
+}
+
+fn main12(){
+    let mut s = String::from("hello");
+
+    let r1 = &s; // 没问题
+    let r2 = &s; // 没问题
+    println!("{} and {}", r1, r2);
+    // 此位置之后 r1 和 r2 不再使用
+
+    let r3 = &mut s; // 没问题
+    println!("{}", r3);
+}
+
+fn main() {
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -> String {
+    let s = String::from("hello");
+    s
+}
