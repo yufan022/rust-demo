@@ -10,8 +10,16 @@ fn main() {
     println!("{}", hello);
     println!("{}", world);
 
-    let first_s = first_word(&s);
-    println!("{}", first_s)
+    let first_s = first_word(&mut s);
+    println!("{}", first_s);
+
+    println!("{}", s);
+
+    s = String::from("hello world new");
+
+
+    println!("{}", s);
+
 }
 
 fn find_first(s: &String) -> usize {
@@ -23,7 +31,10 @@ fn find_first(s: &String) -> usize {
     s.len()
 }
 
-fn first_word(s: &String) -> &str {
-    & s[0..1]
+fn first_word(s: &mut String) -> &str {
+    // 默认不允许修改引用的值
+    s.push_str("aaa");
+
+        & s[0..1]
 }
 
