@@ -1,11 +1,11 @@
-use restaurant::{eat_at_restaurant,eat_at_restaurant_enum,serve_order};
+use restaurant;
 use std::collections::HashMap;
 
 fn main(){
-    eat_at_restaurant();
-    eat_at_restaurant_enum();
+    restaurant::eat_at_restaurant();
+    restaurant::eat_at_restaurant_enum();
     restaurant::hosting::add_to_waitlist();
-    serve_order();
+    restaurant::serve_order();
     let mut map = HashMap::new();
     map.insert(1, 2);
 }
